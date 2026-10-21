@@ -1,0 +1,6 @@
+@TransferGuard.Api_HostAddress = http://localhost:5255
+
+GET {{TransferGuard.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
