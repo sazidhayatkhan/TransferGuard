@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="TransferGuard.Api/TransferGuard.Api.csproj" />
+  <Project Path="TransferGuard.Domain/TransferGuard.Domain.csproj" />
 </Solution>
