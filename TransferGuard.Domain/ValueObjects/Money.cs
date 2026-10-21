@@ -1,3 +1,4 @@
+
 namespace TransferGuard.Domain.ValueObjects;
 
 public sealed record Money
@@ -18,6 +19,43 @@ public sealed record Money
                 nameof(currency));
 
         Amount = amount;
-        Currency = currency;
+        Currency = currency.Trim().ToUpperInvariant();
+    }
+
+    public Money Add(Money other)
+    {
+        EnsureSameCurrency(other);
+        return new Money(Amount + other.Amount, Currency);
+    }
+
+    public Money Subtract(Money other)
+    {
+        EnsureSameCurrency(other);
+
+        if (other.Amount > Amount)
+            throw new InvalidOperationException(
+                "Insufficient amount.");
+
+        return new Money(Amount - other.Amount, Currency);
+    }
+
+    public bool IsGreaterThanOrEqualTo(Money other)
+    {
+        EnsureSameCurrency(other);
+        return Amount >= other.Amount;
+    }
+
+    private void EnsureSameCurrency(Money other)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+
+        if (!string.Equals(
+                Currency,
+                other.Currency,
+                StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "Cannot operate on different currencies.");
+        }
     }
 }
